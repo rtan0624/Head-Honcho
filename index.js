@@ -18,6 +18,7 @@ client.on('ready', () => {
     message.channel.send('pong')
   })
   command(client, ['cc'], (message) => {
+    if(message.member.guild.me.hasPermission("ADMINISTRATOR")){
     const name = message.content.replace(`${prefix}cc `, '')
     console.log(name)
     message.guild.channels
@@ -27,8 +28,11 @@ client.on('ready', () => {
       channel.setParent('861704279152263211')
       console.log(channel)
     })
+    }
   })
   command(client, ['setup', 'start'], (message) => {
+    if(message.member.guild.me.hasPermission("ADMINISTRATOR")){
+
     if(message.guild.channels.cache.find(channel => channel.name === "=>||Private Channels||<="))
     {
       const cHID = message.guild.channels.cache.find(channel => channel.name === "-Private Channels-");
@@ -53,6 +57,7 @@ client.on('ready', () => {
       //db.get(guildID, { raw: false }).then(console.log);
   })
 })
+    }
   })})
 
 client.on('voiceStateUpdate', async (oldState,newState) => {
