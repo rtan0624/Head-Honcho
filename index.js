@@ -29,11 +29,18 @@ client.on('ready', () => {
     })
   })
   command(client, ['setup', 'start'], (message) => {
+    if(message.guild.channels.cache.find(channel => channel.name === "=>||Private Channels||<="))
+    {
+      const cHID = message.guild.channels.cache.find(channel => channel.name === "-Private Channels-");
+      //console.log(cHID.parentID)
+      cHID.parent.delete()
+      cHID.delete()
+    }
     message.guild.channels.create("=>||Private Channels||<=", {
       type: "category",
     }).then((category) => {
       const categoryID = category.id
-      console.log(categoryID)
+      //console.log(categoryID)
        // << try now?
       message.guild.channels.create("-Private Channels-", {
       type: "voice",
@@ -41,9 +48,9 @@ client.on('ready', () => {
       }).then((dbChannel) => {
       const dbChannelID = dbChannel.id
       const guildID = "" + message.guild.id
-      console.log(dbChannelID)
+      //console.log(dbChannelID)
       db.set(guildID, [categoryID, dbChannelID])
-      db.get(guildID, { raw: false }).then(console.log);
+      //db.get(guildID, { raw: false }).then(console.log);
   })
 })
   })})
@@ -56,7 +63,7 @@ client.on('voiceStateUpdate', async (oldState,newState) => {
   let dbArray = await db.get(guildID);
   let dBChannelID = "" + dbArray[1]
   let dBCategoryID = "" + dbArray[0]
-  console.log(dBChannelID)
+  //console.log(dBChannelID)
   if(!oldState.channel && newState.channel.id === dBChannelID){
     const channel = await newState.guild.channels.create(user.tag, {
       type: 'voice',
@@ -76,7 +83,7 @@ client.on('voiceStateUpdate', async (oldState,newState) => {
     });
     member.voice.setChannel(channel);
     voiceCollection.set(user.id, channel.id);
-    console.log(channel)
+    //console.log(channel)
   }else if(!newState.channel){
     if(oldState.channelID === voiceCollection.get(newState.id)) return oldState.channel.delete()
   }
