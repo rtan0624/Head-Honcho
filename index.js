@@ -32,7 +32,7 @@ client.on('ready', () => {
   })
   command(client, ['setup', 'start'], (message) => {
     if(message.member.guild.me.hasPermission("ADMINISTRATOR")){
-
+      message.channel.send("Completed Setup")
     if(message.guild.channels.cache.find(channel => channel.name === "=>||Private Channels||<="))
     {
       const cHID = message.guild.channels.cache.find(channel => channel.name === "-Private Channels-");
@@ -93,6 +93,13 @@ client.on('voiceStateUpdate', async (oldState,newState) => {
     if(oldState.channelID === voiceCollection.get(newState.id)) return oldState.channel.delete()
   }
 })
+
+const http = require('http');
+const server = http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('ok');
+});
+server.listen(3000);
 
 
 client.login(mySecret)
