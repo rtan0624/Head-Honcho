@@ -18,7 +18,8 @@ client.on('ready', () => {
     message.channel.send('pong')
   })
   command(client, ['cc'], (message) => {
-    if(message.member.guild.me.hasPermission("ADMINISTRATOR")){
+    if(message.member.hasPermission("ADMINISTRATOR")){
+      message.channel.send("Creating Channel")
     const name = message.content.replace(`${prefix}cc `, '')
     console.log(name)
     message.guild.channels
@@ -28,25 +29,27 @@ client.on('ready', () => {
       channel.setParent('861704279152263211')
       console.log(channel)
     })
+    }else{
+      message.channel.send("You don't have the permissions")
     }
   })
   command(client, ['setup', 'start'], (message) => {
-    if(message.member.guild.me.hasPermission("ADMINISTRATOR")){
+    if(message.member.hasPermission("ADMINISTRATOR")){
       message.channel.send("Completed Setup")
-    if(message.guild.channels.cache.find(channel => channel.name === "=>||Private Channels||<="))
+    if(message.guild.channels.cache.find(channel => channel.name === "「🔒」 || Private Channels"))
     {
-      const cHID = message.guild.channels.cache.find(channel => channel.name === "-Private Channels-");
+      const cHID = message.guild.channels.cache.find(channel => channel.name === "『➕』| New Channel");
       //console.log(cHID.parentID)
       cHID.parent.delete()
       cHID.delete()
     }
-    message.guild.channels.create("=>||Private Channels||<=", {
+    message.guild.channels.create("「🔒」 || Private Channels", {
       type: "category",
     }).then((category) => {
       const categoryID = category.id
       //console.log(categoryID)
        // << try now?
-      message.guild.channels.create("-Private Channels-", {
+      message.guild.channels.create("『➕』| New Channel", {
       type: "voice",
       parent: categoryID
       }).then((dbChannel) => {
@@ -57,6 +60,8 @@ client.on('ready', () => {
       //db.get(guildID, { raw: false }).then(console.log);
   })
 })
+    }else{
+      message.channel.send("You don't have the permissions")
     }
   })})
 
